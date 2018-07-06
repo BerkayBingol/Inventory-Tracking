@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body onload = "listAllItems()">
+
+
+
+
+<h1>
+    <marquee bgcolor=orange behavior=alternate> Inventory Tracking System v1.0 </marquee>
+</h1>
+
+
+
+<script type="text/javascript">
+
+
+
+    function listAllItems(){
+
+
+        var xhr = new XMLHttpRequest();
+        var url = "/listInventoryItem";
+        xhr.open("GET", url, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    var parseResponse = JSON.parse(xhr.responseText);
+                    createTable(parseResponse);
+                    //alert(xhr.responseText);
+                }
+                else {
+                    alert(xhr.responseText);
+                }
+            }
+        };
+        xhr.send();
+    }
+    function createTable(object) {
+        var e_table = document.getElementById("e_table");
+
+        e_table.innerHTML = "";
+        for(var i = 0; i < object.length; i++){
+            addRowToTable(object[i]);
+        }
+
+    }
+    function addRowToTable(object) {
+        var e_table = document.getElementById("e_table");
+        var tr_table = document.createElement("tr");
+        e_table.appendChild(tr_table);
+
+        var td_itemName = document.createElement("td");
+        var td_Number = document.createElement("td");
+
+        td_itemName.innerHTML = object.itemName;
+        td_Number.innerHTML = object.number;
+        tr_table.appendChild(td_itemName);
+        tr_table.appendChild(td_Number);
+
+    }
+
+
+
+</script>
+
+<table>
+    <thead>
+    <tr id="e_header">
+        <th>Item Name</th>
+        <th>Item Number</th>
+    </tr>
+
+    </thead>
+
+    <tbody id="e_table">
+
+    </tbody>
+
+</table>
+
+</body>
+
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+
+<html>
+<head>
+
+
+
+</head>
+
+<body>
+<h1>
+    <marquee bgcolor=orange behavior=alternate> Inventory Tracking System v1.0 </marquee>
+</h1>
+
+<fieldset>
+    <legend>Remove Item</legend>
+    <br>Item Name:<input type="text" id="itemName" ><br>
+    <button onclick="deleteItem()">Submit.</button>
+
+</fieldset>
+
+
+
+
+<script type="text/javascript">
+
+    function deleteItem(){
+
+        var itemName = document.getElementById('itemName').value;
+        var xhr = new XMLHttpRequest();
+        var url = "/deleteItem";
+        xhr.open("DELETE", url, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+
+                    alert(xhr.responseText);
+                }
+                else {
+                    alert(xhr.responseText);
+                }
+            }
+        };
+        var data = JSON.stringify({"itemName": itemName});
+        xhr.send(data);
+    }
+
+
+
+
+
+</script>
+</body>
+
+</html>

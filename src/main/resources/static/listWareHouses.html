@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+<h1>
+    <marquee bgcolor=orange behavior=alternate> Inventory Tracking System v1.0 </marquee>
+</h1>
+
+<fieldset>
+    <legend>List the WareHouses</legend>
+
+    <button onclick="listWareHouses()">LIST!</button>
+
+</fieldset>
+
+<script type="text/javascript">
+
+
+
+    function listWareHouses(){
+
+
+        var xhr = new XMLHttpRequest();
+        var url = "/listWareHouse";
+        xhr.open("GET", url, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+
+                    alert(xhr.responseText);
+                }
+                else {
+                    alert(xhr.responseText);
+                }
+            }
+        };
+        xhr.send();
+    }
+
+
+
+</script>
+</body>
+
+</html>

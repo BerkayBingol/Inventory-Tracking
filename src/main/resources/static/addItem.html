@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+
+
+<html>
+<head>
+
+
+
+</head>
+
+<body>
+<h1>
+	<marquee bgcolor=orange behavior=alternate> Inventory Tracking System v1.0 </marquee>
+</h1>
+
+<fieldset>
+	<legend>Add General Type of Item:</legend>
+	<br>Item Name:<input type="text" id="name" ><br>
+	<br> Number of items:<input type="text" id="number" ><br>
+	<button onclick="addTODO()">Submit.</button>
+
+</fieldset>
+
+
+
+
+<script type="text/javascript">
+
+    function addTODO(){
+
+        var name = document.getElementById('name').value;
+        var number = document.getElementById('number').value;
+        var xhr = new XMLHttpRequest();
+        var url = "/addInventoryItem";
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    alert(xhr.responseText);
+
+                }
+                else {
+                    alert(xhr.responseText);
+                }
+            }
+        };
+        var data = JSON.stringify({"name": name, "number": number});
+        xhr.send(data);
+    }
+
+
+
+
+
+
+</script>
+</body>
+
+</html>

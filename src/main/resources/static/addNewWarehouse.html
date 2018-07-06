@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+
+<html>
+<head>
+
+
+
+</head>
+
+<body>
+<h1>
+  <marquee bgcolor=orange behavior=alternate> Inventory Tracking System v1.0 </marquee>
+</h1>
+
+<fieldset>
+  <legend>Add new WareHouse</legend>
+  <br>Warehouse Name:<input type="text" id="name" ><br>
+  <br> Warehouse Location:<input type="text" id="location" ><br>
+  <button onclick="addWareHouse()">Submit.</button>
+
+</fieldset>
+
+
+
+
+<script type="text/javascript">
+
+    function addWareHouse(){
+
+        var name = document.getElementById('name').value;
+        var location = document.getElementById('location').value;
+        var xhr = new XMLHttpRequest();
+        var url = "/addNewWarehouse";
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+
+                    alert(xhr.responseText);
+                }
+                else {
+                    alert(xhr.responseText);
+                }
+            }
+        };
+        var data = JSON.stringify({"name": name, "location": location});
+        xhr.send(data);
+    }
+
+
+
+
+
+</script>
+</body>
+
+</html>
