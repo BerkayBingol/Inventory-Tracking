@@ -2,58 +2,69 @@
 
 
 <html>
-  <head>
-  
+<head>
+	<link rel="stylesheet" href="css/main.css">
 
-
-  </head>
+</head>
 
 <body>
-			<h1>
-				<marquee bgcolor=orange behavior=alternate> Inventory Tracking System v1.0 </marquee>
-			</h1>
-
-			<fieldset>
-				<legend>Update the Stock Status of Item</legend>
-				<br>Item Name:<input type="text" id="name" ><br>
-				<br> Number of items:<input type="text" id="number" ><br>
-				<button onclick="update()">Submit.</button>
-
-			</fieldset>
+<h1>
+	<marquee bgcolor=orange behavior=alternate> Inventory Tracking System v1.0 </marquee>
+</h1>
 
 
+<fieldset>
+	<legend>Update the Item Stock</legend>
 
-			
-			<script type="text/javascript">
-			
-			function update(){
+	<label>Item Name:</label>
+	<input type="text" id="name" />
+	<br />
+	<br> </br>
+	<label>Item Stock Number: </label>
+	<input type="text" id="number" />
+	<br />
 
-				var name = document.getElementById('name').value;
-		    	var number = document.getElementById('number').value;
-                var xhr = new XMLHttpRequest();
-                var url = "/updateItemStock";
-                xhr.open("PUT", url, true);
-                xhr.setRequestHeader("Content-Type", "application/json");
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState === 4) {
-                        if (xhr.status === 200) {
+</fieldset>
 
-                            alert(xhr.responseText);
-                        }
-                        else {
-                            alert(xhr.responseText);
-                        }
-                    }
-                };
-                var data = JSON.stringify({"name": name, "number": number});
-                xhr.send(data);
+<div>
+
+	<button onclick="update()">Submit.</button>
+	<a href="mainpage.html"><button>Return Back.</button></a>
+
+</div>
+
+
+
+<script type="text/javascript">
+
+    function update(){
+
+        var name = document.getElementById('name').value;
+        var number = document.getElementById('number').value;
+        var xhr = new XMLHttpRequest();
+        var url = "/updateItemStock";
+        xhr.open("PUT", url, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+
+                    alert(xhr.responseText);
+                }
+                else {
+                    alert(xhr.responseText);
+                }
             }
+        };
+        var data = JSON.stringify({"name": name, "number": number});
+        xhr.send(data);
+    }
 
 
-			
 
-			
-			</script>
+
+
+</script>
 </body>
 
 </html>

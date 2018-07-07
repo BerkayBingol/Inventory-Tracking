@@ -97,6 +97,22 @@ class RemoveItemWrapper {
     }
 
 }
+class RemoveWarehouseWrapper {
+
+    private String warehousename;
+
+    public String getWarehousename() {
+        return warehousename;
+    }
+
+    public void setWarehousename(String warehousename) {
+        this.warehousename = warehousename;
+    }
+
+
+
+
+}
 
 @RestController
 public class InventoryTrackingController {
@@ -221,27 +237,30 @@ public class InventoryTrackingController {
         InventoryItem inventoryItem = inventoryItemRepository.findByItemName(itemName);
 
 
+        //Check the item added before
+        if( inventoryWareHouse.getInventoryItems().size() != 0) {
+            for (int i = 0; i < inventoryWareHouse.getInventoryItems().size(); i++) {
 
-            //Check the item added before
-        for (int i = 0; i <inventoryWareHouse.getInventoryItems().size(); i++) {
+                if (inventoryWareHouse.getInventoryItems().get(i).getItemName().equalsIgnoreCase(itemName)) {
+                    responseWrapper.setMessage
+                            ("Error, item added before.");
+                    responseWrapper.setResponseCode(400);
+                    return responseWrapper.getMessage();
+                }
 
-           if(inventoryWareHouse.getInventoryItems().get(i).getItemName().equalsIgnoreCase(itemName)) {
-               responseWrapper.setMessage
-                       ("Error, item added before.");
-               responseWrapper.setResponseCode(400);
-               return responseWrapper.getMessage();
-           }
-
-
-
+            }
         }
         //Check the item does not exists//
 
-        if(inventoryWareHouse ==null || inventoryItem == null) {
+         if( inventoryItem  == null || inventoryWareHouse == null  ){
+
             responseWrapper.setMessage
                     ("Error,Warehouse or item does not exists.");
             responseWrapper.setResponseCode(400);
-            return responseWrapper.getMessage(); }
+            return responseWrapper.getMessage();
+
+        }
+
 
         else {
             inventoryWareHouse.addInventoryItem(inventoryItem);
@@ -251,6 +270,7 @@ public class InventoryTrackingController {
             responseWrapper.setResponseCode(200);
             return responseWrapper.getMessage();
         }
+
 
 
     }
@@ -263,9 +283,8 @@ public class InventoryTrackingController {
         int stockNumber = JsonBODY.getNumber();
 
         InventoryItem inventoryItem = inventoryItemRepository.findByItemName(itemName);
-        Long inventoryItemId = inventoryItem.getId();
 
-        // InventoryWareHouse inventoryWareHouse = inventoryWareHouseRepository.
+
         //Check the item doesnt exists//
 
         if(inventoryItem == null || stockNumber < 0 ){ responseWrapper.setMessage("Error, Item does not exists. Check!");
@@ -278,7 +297,6 @@ public class InventoryTrackingController {
                 //remove item
                 //remove item tested. It worked.
                 responseWrapper.setMessage("Success " +inventoryItem.getItemName()+ " is removed.");
-
                 inventoryItemRepository.delete(inventoryItem);
                 responseWrapper.setResponseCode(200);
                 return responseWrapper.getMessage();
@@ -292,7 +310,6 @@ public class InventoryTrackingController {
                 responseWrapper.setMessage("Success " +inventoryItem.getItemName()+ " is updated." +
                         " New stock number is: ."+inventoryItem.getNumber()+"");
 
-                inventoryItemRepository.delete(inventoryItem);
                 responseWrapper.setResponseCode(200);
                 return responseWrapper.getMessage();
 
@@ -326,7 +343,28 @@ public class InventoryTrackingController {
 
 
     }
+    @RequestMapping(value = "/deleteWarehouse", method = RequestMethod.DELETE)
+    public String deleteWarehouse(@RequestBody RemoveWarehouseWrapper JsonBODY) {
 
+        String wareHouse_Name = JsonBODY.getWarehousename();
+        InventoryWareHouse inventoryWareHouse = inventoryWareHouseRepository.findByWarehousename(wareHouse_Name);
+
+        //if inventory warehouse is null, so there is nothing to do with delete.
+        if (inventoryWareHouse == null ) { responseWrapper.setMessage("Error!, there is no warehouse named as "
+                +wareHouse_Name  );
+            responseWrapper.setResponseCode(400);
+            return responseWrapper.getMessage();}
+
+        else {
+            inventoryWareHouseRepository.delete(inventoryWareHouse);
+            responseWrapper.setMessage("Success " +wareHouse_Name+ " is removed.");
+            responseWrapper.setResponseCode(200);
+            return responseWrapper.getMessage();
+
+        }
+
+
+    }
 
 
 

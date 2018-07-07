@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" href="css/main.css">
 
 </head>
 <body onload="listWareHouses()">
@@ -11,9 +12,31 @@
 <fieldset>
     <legend>List the WareHouses</legend>
 
+    <table>
+        <thead>
+        <tr id="e_header">
+            <th>Warehouse ID</th>
+            <th>Warehouse Name</th>
+            <th>WareHouse Location</th>
+            <th>Item Name</th>
+            <th>Item Number</th>
+        </tr>
+
+        </thead>
+
+        <tbody id="e_table">
+
+        </tbody>
+
+    </table>
 
 </fieldset>
 
+<div>
+
+    <a href="mainpage.html"><button>Return Back.</button></a>
+
+</div>
 <script type="text/javascript">
 
 
@@ -33,10 +56,10 @@
                     //     createTable(parseResponse);
                     //
                     // }
+                    alert(xhr.responseText);
 
                         createTable(parseResponse)
 
-                    alert(xhr.responseText)
                 }
                 else {
                     alert(xhr.responseText);
@@ -64,10 +87,40 @@
         // td_wareHouseLocation.innerHTML = object.warehouselocation;
         // tr_table.appendChild(td_wareHouseName);
         // tr_table.appendChild(td_wareHouseLocation);
+        if(object.inventoryItems.length > 0)
+        {
+            for(var i = 0; i < object.inventoryItems.length; i++){
+
+                var e_table = document.getElementById("e_table");
+                var tr_table = document.createElement("tr");
+                e_table.appendChild(tr_table);
+
+                var td_wareHouseID = document.createElement("td");
+                var td_wareHouseName = document.createElement("td");
+                var td_wareHouseLocation = document.createElement("td");
+                var td_itemName = document.createElement("td");
+                var td_itemNumber = document.createElement("td");
+
+                td_wareHouseID.innerHTML = object.id;
+                td_wareHouseName.innerHTML = object.warehousename;
+                td_wareHouseLocation.innerHTML = object.warehouselocation;
+                tr_table.appendChild(td_wareHouseID);
+                tr_table.appendChild(td_wareHouseName);
+                tr_table.appendChild(td_wareHouseLocation);
 
 
-        for(var i = 0; i < object.inventoryItems.length; i++){
+                var itemName = object.inventoryItems[i].itemName;
+                var itemNumber = object.inventoryItems[i].number;
 
+                td_itemName.innerHTML = itemName;
+                td_itemNumber.innerHTML = itemNumber;
+
+
+                tr_table.appendChild(td_itemName);
+                tr_table.appendChild(td_itemNumber);
+            }
+        }
+        else {
             var e_table = document.getElementById("e_table");
             var tr_table = document.createElement("tr");
             e_table.appendChild(tr_table);
@@ -75,8 +128,6 @@
             var td_wareHouseID = document.createElement("td");
             var td_wareHouseName = document.createElement("td");
             var td_wareHouseLocation = document.createElement("td");
-            var td_itemName = document.createElement("td");
-            var td_itemNumber = document.createElement("td");
 
             td_wareHouseID.innerHTML = object.id;
             td_wareHouseName.innerHTML = object.warehousename;
@@ -86,16 +137,9 @@
             tr_table.appendChild(td_wareHouseLocation);
 
 
-            var itemName = object.inventoryItems[i].itemName;
-            var itemNumber = object.inventoryItems[i].number;
-
-            td_itemName.innerHTML = itemName;
-            td_itemNumber.innerHTML = itemNumber;
-
-
-            tr_table.appendChild(td_itemName);
-            tr_table.appendChild(td_itemNumber);
         }
+
+
 
 
     }
@@ -103,23 +147,6 @@
 
 
 </script>
-<table>
-    <thead>
-    <tr id="e_header">
-        <th>Warehouse ID</th>
-        <th>Warehouse Name</th>
-        <th>WareHouse Location</th>
-        <th>Item Name</th>
-        <th>Item Number</th>
-    </tr>
-
-    </thead>
-
-    <tbody id="e_table">
-
-    </tbody>
-
-</table>
 
 </body>
 

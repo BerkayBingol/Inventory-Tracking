@@ -6,12 +6,38 @@
 </head>
 <body onload = "listAllItems()">
 
-
-
-
 <h1>
     <marquee bgcolor=orange behavior=alternate> Inventory Tracking System v1.0 </marquee>
 </h1>
+
+<fieldset>
+    <legend>List the Items</legend>
+
+    <table>
+        <thead>
+        <tr id="e_header">
+            <th>Item ID</th>
+            <th>Item Name</th>
+            <th>Item Number</th>
+
+        </tr>
+
+        </thead>
+
+        <tbody id="e_table">
+
+        </tbody>
+
+    </table>
+
+</fieldset>
+<div>
+
+    <a href="mainpage.html"><button>Return Back.</button></a>
+
+</div>
+
+
 
 
 
@@ -30,8 +56,8 @@
             if (xhr.readyState === 4) {
                 if (xhr.status === 200) {
                     var parseResponse = JSON.parse(xhr.responseText);
+                    alert(xhr.responseText);
                     createTable(parseResponse);
-                    //alert(xhr.responseText);
                 }
                 else {
                     alert(xhr.responseText);
@@ -54,13 +80,18 @@
         var tr_table = document.createElement("tr");
         e_table.appendChild(tr_table);
 
+        var td_ID = document.createElement("td");
         var td_itemName = document.createElement("td");
         var td_Number = document.createElement("td");
-
+        td_ID.innerHTML = object.id;
         td_itemName.innerHTML = object.itemName;
         td_Number.innerHTML = object.number;
+
+        tr_table.appendChild(td_ID);
         tr_table.appendChild(td_itemName);
         tr_table.appendChild(td_Number);
+
+      //  if(object.inventoryWare)
 
     }
 
@@ -68,20 +99,7 @@
 
 </script>
 
-<table>
-    <thead>
-    <tr id="e_header">
-        <th>Item Name</th>
-        <th>Item Number</th>
-    </tr>
 
-    </thead>
-
-    <tbody id="e_table">
-
-    </tbody>
-
-</table>
 
 </body>
 

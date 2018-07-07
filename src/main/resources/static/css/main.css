@@ -1,3 +1,31 @@
 body {
-  background-color:#dadada;
+    background-color:#dadada;
 }
+fieldset {
+    border: 1px solid rgb(255,232,57);
+    width: 400px;
+    margin:auto;
+}
+label {
+    float:left;
+    width:25%;
+    margin-right:0.5em;
+    padding-top:0.2em;
+    text-align:right;
+    font-weight:bold;
+
+
+}
+legend {
+     padding: 0.2em 0.5em;
+     border:1px solid green;
+     color:green;
+     font-size:90%;
+     text-align:right;
+ }
+button {
+    background-color: green; /* Green */
+    margin:auto;
+    display:block;
+}
+
