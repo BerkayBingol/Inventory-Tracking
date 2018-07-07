@@ -7,6 +7,9 @@ import com.inventory.tracking.InventoryTracking.Repository.InventoryItemReposito
 import com.inventory.tracking.InventoryTracking.Repository.InventoryWareHouseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import com.inventory.tracking.InventoryTracking.ResponseWrapper;
+import javax.servlet.http.HttpServletResponse;
+
 
 import java.util.List;
 import com.inventory.tracking.InventoryTracking.Entity.InventoryItem;
@@ -102,16 +105,25 @@ public class InventoryTrackingController {
     InventoryItemRepository inventoryItemRepository;
     @Autowired
     InventoryWareHouseRepository inventoryWareHouseRepository;
+    ResponseWrapper responseWrapper = new ResponseWrapper();
+
 
     @RequestMapping(value = "/addInventoryItem", method= RequestMethod.POST)
-    public Object addInventoryItem(@RequestBody AddItemWrapper JsonBODY) {
+    public Object addInventoryItem(@RequestBody AddItemWrapper JsonBODY, HttpServletResponse response) {
 
         if (JsonBODY.getName() == "" || JsonBODY.getNumber() <1 ||
                 JsonBODY.getName().length() < 2) //Stok varsa ve girilen isim fieldi null degilse
         {
-            return "Validation error! Check !";
+
+            responseWrapper.setMessage("Validation Error");
+            responseWrapper.setResponseCode(400);
+            return responseWrapper.getMessage();
+
 
         }
+
+
+
         else {
             String itemName = JsonBODY.getName();
             int numberOfItem = JsonBODY.getNumber();
@@ -119,16 +131,20 @@ public class InventoryTrackingController {
             InventoryItem inventoryItem = inventoryItemRepository.findByItemName(itemName);
             if(inventoryItem!=null) {
                 //return err
-                return "Item already added. Please update.";
+                responseWrapper.setMessage("Error, Item was already added!");
+                responseWrapper.setResponseCode(400);
+                return responseWrapper.getMessage();
             }
             else{
                 inventoryItem = new InventoryItem();
                 inventoryItem.setItemName(itemName);
                 inventoryItem.setNumber(numberOfItem);
                 inventoryItemRepository.save(inventoryItem);
+                responseWrapper.setMessage("Success! Item is added.");
+                responseWrapper.setResponseCode(200);
+                return responseWrapper.getMessage();
 
             }
-            return "Success ! Item Record is added succesfully!";
 
         }
 
@@ -152,7 +168,9 @@ public class InventoryTrackingController {
         if (JsonBODY.getName() == "" ||  JsonBODY.getLocation() == "" ||
                 JsonBODY.getName().length() <2 || JsonBODY.getLocation().length() <2)
         {
-            return "Validation error! Check !";
+            responseWrapper.setMessage("Validation Error");
+            responseWrapper.setResponseCode(400);
+            return responseWrapper.getMessage();
 
         }
         else {
@@ -162,7 +180,9 @@ public class InventoryTrackingController {
             InventoryWareHouse inventoryWareHouse = inventoryWareHouseRepository.findByWarehousename(wareHouseName);
 
             if(inventoryWareHouse!=null) {
-                return "Record already exists.";
+                responseWrapper.setMessage("Error, Warehouse is already added! ");
+                responseWrapper.setResponseCode(400);
+                return responseWrapper.getMessage();
             }
             else{
                 inventoryWareHouse = new InventoryWareHouse();
@@ -170,7 +190,9 @@ public class InventoryTrackingController {
                 inventoryWareHouse.setWarehouselocation(wareHouseLocation);
                 inventoryWareHouseRepository.save(inventoryWareHouse);
 
-                return "Success ! WareHouse Record is added succesfully!";
+                responseWrapper.setMessage("Success! Warehouse is added!");
+                responseWrapper.setResponseCode(200);
+                return responseWrapper.getMessage();
             }
 
         }
@@ -198,16 +220,36 @@ public class InventoryTrackingController {
         InventoryWareHouse inventoryWareHouse = inventoryWareHouseRepository.findByWarehousename(warehouseName);
         InventoryItem inventoryItem = inventoryItemRepository.findByItemName(itemName);
 
-        //Check the item doesnt exists//
 
-        if(inventoryWareHouse ==null || inventoryItem == null){ return "Error. WareHouse does not exists.";}
+
+            //Check the item added before
+        for (int i = 0; i <inventoryWareHouse.getInventoryItems().size(); i++) {
+
+           if(inventoryWareHouse.getInventoryItems().get(i).getItemName().equalsIgnoreCase(itemName)) {
+               responseWrapper.setMessage
+                       ("Error, item added before.");
+               responseWrapper.setResponseCode(400);
+               return responseWrapper.getMessage();
+           }
+
+
+
+        }
+        //Check the item does not exists//
+
+        if(inventoryWareHouse ==null || inventoryItem == null) {
+            responseWrapper.setMessage
+                    ("Error,Warehouse or item does not exists.");
+            responseWrapper.setResponseCode(400);
+            return responseWrapper.getMessage(); }
 
         else {
             inventoryWareHouse.addInventoryItem(inventoryItem);
             inventoryItem.addInventoryWareHouse(inventoryWareHouse);
             inventoryItemRepository.save(inventoryItem);
-            return "Record added the item to the warehouse. !";
-
+            responseWrapper.setMessage("Success, item was added to "+ inventoryWareHouse.getWarehousename());
+            responseWrapper.setResponseCode(200);
+            return responseWrapper.getMessage();
         }
 
 
@@ -226,25 +268,37 @@ public class InventoryTrackingController {
         // InventoryWareHouse inventoryWareHouse = inventoryWareHouseRepository.
         //Check the item doesnt exists//
 
-        if(inventoryItem == null || stockNumber < 0 ){ return "Error. Item does not exists.(or stockNumber is invalid!";}
+        if(inventoryItem == null || stockNumber < 0 ){ responseWrapper.setMessage("Error, Item does not exists. Check!");
+            responseWrapper.setResponseCode(400);
+            return responseWrapper.getMessage();}
 
         else {
 
             if(stockNumber == 0) {
                 //remove item
                 //remove item tested. It worked.
-                inventoryItemRepository.delete(inventoryItem);
+                responseWrapper.setMessage("Success " +inventoryItem.getItemName()+ " is removed.");
 
+                inventoryItemRepository.delete(inventoryItem);
+                responseWrapper.setResponseCode(200);
+                return responseWrapper.getMessage();
 
             }
             else {
                 inventoryItem.setItemName(itemName);
                 inventoryItem.setNumber(stockNumber);
                 inventoryItemRepository.save(inventoryItem);
+
+                responseWrapper.setMessage("Success " +inventoryItem.getItemName()+ " is updated." +
+                        " New stock number is: ."+inventoryItem.getNumber()+"");
+
+                inventoryItemRepository.delete(inventoryItem);
+                responseWrapper.setResponseCode(200);
+                return responseWrapper.getMessage();
+
             }
 
 
-        return "Item is updated. Check from list !";
         }
 
 
@@ -253,18 +307,20 @@ public class InventoryTrackingController {
     @RequestMapping(value = "/deleteItem", method = RequestMethod.DELETE)
     public String deleteItem(@RequestBody RemoveItemWrapper JsonBODY) {
 
-        //Listelemeyi butonlarla yap.
-
-
         String willDeleteItemName = JsonBODY.getItemName();
         InventoryItem inventoryItem = inventoryItemRepository.findByItemName(willDeleteItemName);
 
         //if inventory item is null, so there is nothing to do with delete.
-        if (inventoryItem == null ) { return "There is no item exists who has" +willDeleteItemName;}
+        if (inventoryItem == null ) { responseWrapper.setMessage("Error!, there is no item named as "
+                +willDeleteItemName  );
+            responseWrapper.setResponseCode(400);
+            return responseWrapper.getMessage();}
+
         else {
             inventoryItemRepository.delete(inventoryItem);
-        return willDeleteItemName +" deleted";
-
+            responseWrapper.setMessage("Success " +willDeleteItemName+ " is removed.");
+            responseWrapper.setResponseCode(200);
+            return responseWrapper.getMessage();
 
         }
 
