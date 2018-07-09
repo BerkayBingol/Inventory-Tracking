@@ -127,8 +127,9 @@ public class InventoryTrackingController {
 
             responseWrapper.setMessage("Validation Error");
             responseWrapper.setResponseCode(400);
+            response.setStatus(400);
+            responseWrapper.setData("null");
             return responseWrapper.getMessage();
-
 
         }
 
@@ -143,6 +144,8 @@ public class InventoryTrackingController {
                 //return err
                 responseWrapper.setMessage("Error, Item was already added!");
                 responseWrapper.setResponseCode(400);
+                responseWrapper.setData(inventoryItem);
+                response.setStatus(400);
                 return responseWrapper.getMessage();
             }
             else{
@@ -152,6 +155,8 @@ public class InventoryTrackingController {
                 inventoryItemRepository.save(inventoryItem);
                 responseWrapper.setMessage("Success! Item is added.");
                 responseWrapper.setResponseCode(200);
+                responseWrapper.setData(inventoryItem);
+                response.setStatus(200);
                 return responseWrapper.getMessage();
 
             }
@@ -181,6 +186,7 @@ public class InventoryTrackingController {
                 JsonBODY.getName().length() <2 || JsonBODY.getLocation().length() <2)
         {
             responseWrapper.setMessage("Validation Error");
+            responseWrapper.setData("null");
             responseWrapper.setResponseCode(400);
             return responseWrapper.getMessage();
 
@@ -194,6 +200,7 @@ public class InventoryTrackingController {
             if(inventoryWareHouse!=null) {
                 responseWrapper.setMessage("Error, Warehouse is already added! ");
                 responseWrapper.setResponseCode(400);
+                responseWrapper.setData("null");
                 return responseWrapper.getMessage();
             }
             else{
@@ -204,14 +211,11 @@ public class InventoryTrackingController {
 
                 responseWrapper.setMessage("Success! Warehouse is added!");
                 responseWrapper.setResponseCode(200);
+                responseWrapper.setData(inventoryWareHouse);
                 return responseWrapper.getMessage();
             }
 
         }
-
-
-
-
 
     }
 
@@ -241,6 +245,7 @@ public class InventoryTrackingController {
                     responseWrapper.setMessage
                             ("Error, item added before.");
                     responseWrapper.setResponseCode(400);
+                    responseWrapper.setData("null");
                     return responseWrapper.getMessage();
                 }
 
