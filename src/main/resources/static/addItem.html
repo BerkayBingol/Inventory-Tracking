@@ -5,31 +5,41 @@
 <head>
 
 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/main.css">
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
 <body>
-<h1>
-    <marquee bgcolor=orange behavior=alternate> Inventory Tracking System v1.0 </marquee>
-</h1>
+<div class="container">
+    <h1>
+        <marquee bgcolor=orange behavior=alternate> Inventory Tracking System v1.0 </marquee>
+    </h1>
 
 
-<fieldset>
-    <legend>Add General Type of Item:</legend>
-    <label>Item Name:</label>
-    <input type="text" id="name" />
-    <br />
-    <br> </br>
-    <label>Item Stock Number: </label>
-    <input type="text" id="number" />
-    <br />
+    <fieldset>
+        <legend>Add General Type of Item:</legend>
+        <label>Item Name:</label>
+        <input type="text" id="name" />
+        <br />
+        <br> </br>
+        <label>Item Stock Number: </label>
+        <input type="text" id="number" />
+        <br />
 
-</fieldset>
-<div>
+    </fieldset>
+    <div class="row">
+    <div class="col-md-4"></div>
 
-    <button onclick="addTODO()">Submit.</button>
-    <a href="mainpage.html"><button>Return Back.</button></a>
+    <div class="col-md-2"><button class="btn btn-success" onclick="addItem()">Submit</button></div>
+    <div class="col-md-2">
+        <a href="mainpage.html"><button class="btn btn-success">Return Back</button></a></div>
+    <div class="col-md-4"></div>
+</div>
+
 
 </div>
 
@@ -37,7 +47,7 @@
 
 <script type="text/javascript">
 
-    function addTODO(){
+    function addItem(){
 
         var name = document.getElementById('name').value;
         var number = document.getElementById('number').value;

@@ -3,8 +3,12 @@
 
 <html>
 <head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/main.css">
 
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
 <body>
@@ -26,11 +30,13 @@
 
 </fieldset>
 
-<div>
+<div class="row">
+	<div class="col-md-4"></div>
 
-	<button onclick="update()">Submit.</button>
-	<a href="mainpage.html"><button>Return Back.</button></a>
-
+	<div class="col-md-2"><button class="btn btn-success" onclick="update()">Update</button></div>
+	<div class="col-md-2">
+		<a href="mainpage.html"><button class="btn btn-success">Return Back</button></a></div>
+	<div class="col-md-4"></div>
 </div>
 
 

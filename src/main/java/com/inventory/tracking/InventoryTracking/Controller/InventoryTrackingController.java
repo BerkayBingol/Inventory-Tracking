@@ -11,9 +11,7 @@ import com.inventory.tracking.InventoryTracking.ResponseWrapper;
 import javax.servlet.http.HttpServletResponse;
 
 
-import java.util.List;
-import com.inventory.tracking.InventoryTracking.Entity.InventoryItem;
-import com.inventory.tracking.InventoryTracking.Entity.InventoryWareHouse;
+
 
 class AddItemWrapper { //Wrapper provides JSON serializer to get parameters as normally.
 
@@ -109,9 +107,6 @@ class RemoveWarehouseWrapper {
         this.warehousename = warehousename;
     }
 
-
-
-
 }
 
 @RestController
@@ -122,7 +117,6 @@ public class InventoryTrackingController {
     @Autowired
     InventoryWareHouseRepository inventoryWareHouseRepository;
     ResponseWrapper responseWrapper = new ResponseWrapper();
-
 
     @RequestMapping(value = "/addInventoryItem", method= RequestMethod.POST)
     public Object addInventoryItem(@RequestBody AddItemWrapper JsonBODY, HttpServletResponse response) {
@@ -169,6 +163,8 @@ public class InventoryTrackingController {
 
     }
 
+
+    //shortcut of the assigning a http request type , ex.get request
     @GetMapping(value = "/listInventoryItem")
     public Object listInventoryItem() {
 
@@ -178,7 +174,7 @@ public class InventoryTrackingController {
 
 
     @RequestMapping(value = "/addNewWarehouse", method = RequestMethod.POST)
-    public Object addNewWarehouse(@RequestBody AddWareHouseWrapper JsonBODY) {
+    public Object addNewWarehouse(@RequestBody AddWareHouseWrapper JsonBODY, HttpServletResponse response) {
 
 
         if (JsonBODY.getName() == "" ||  JsonBODY.getLocation() == "" ||
@@ -227,7 +223,7 @@ public class InventoryTrackingController {
 
 
     @RequestMapping(value = "/addItemToWareHouse", method = RequestMethod.POST)
-    public String addItemToWareHouse(@RequestBody AddItemToWareHouseWrapper JsonBODY) {
+    public String addItemToWareHouse(@RequestBody AddItemToWareHouseWrapper JsonBODY, HttpServletResponse response) {
 
 
         String itemName = JsonBODY.getItemName();
@@ -252,7 +248,7 @@ public class InventoryTrackingController {
         }
         //Check the item does not exists//
 
-         if( inventoryItem  == null || inventoryWareHouse == null  ){
+        if( inventoryItem  == null || inventoryWareHouse == null  ){
 
             responseWrapper.setMessage
                     ("Error,Warehouse or item does not exists.");
@@ -276,7 +272,7 @@ public class InventoryTrackingController {
     }
 
     @RequestMapping(value = "/updateItemStock", method = RequestMethod.PUT)
-    public String updateItemStock(@RequestBody AddItemWrapper JsonBODY) {
+    public String updateItemStock(@RequestBody AddItemWrapper JsonBODY, HttpServletResponse response) {
 
 
         String itemName = JsonBODY.getName();
@@ -322,7 +318,7 @@ public class InventoryTrackingController {
     }
 
     @RequestMapping(value = "/deleteItem", method = RequestMethod.DELETE)
-    public String deleteItem(@RequestBody RemoveItemWrapper JsonBODY) {
+    public String deleteItem(@RequestBody RemoveItemWrapper JsonBODY, HttpServletResponse response) {
 
         String willDeleteItemName = JsonBODY.getItemName();
         InventoryItem inventoryItem = inventoryItemRepository.findByItemName(willDeleteItemName);
@@ -344,7 +340,7 @@ public class InventoryTrackingController {
 
     }
     @RequestMapping(value = "/deleteWarehouse", method = RequestMethod.DELETE)
-    public String deleteWarehouse(@RequestBody RemoveWarehouseWrapper JsonBODY) {
+    public String deleteWarehouse(@RequestBody RemoveWarehouseWrapper JsonBODY, HttpServletResponse response) {
 
         String wareHouse_Name = JsonBODY.getWarehousename();
         InventoryWareHouse inventoryWareHouse = inventoryWareHouseRepository.findByWarehousename(wareHouse_Name);

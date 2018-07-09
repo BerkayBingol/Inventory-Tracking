@@ -2,70 +2,81 @@
 
 
 <html>
-  <head>
+<head>
 
-	  <link rel="stylesheet" href="css/main.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/main.css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 
-  </head>
+</head>
 
 <body>
-			<h1>
-				<marquee bgcolor=orange behavior=alternate> Inventory Tracking System v1.0 </marquee>
-			</h1>
+<h1>
+	<marquee bgcolor=orange behavior=alternate> Inventory Tracking System v1.0 </marquee>
+</h1>
 
-			<fieldset>
-				<legend>Add Item To WareHouse:</legend>
+<fieldset>
+	<legend>Add Item To WareHouse:</legend>
 
-				<label>Item Name:</label>
-				<input type="text" id="itemName" />
-				<br />
-				<br> </br>
-				<label>Warehouse Name: </label>
-				<input type="text" id="warehouseName" />
-				<br />
-
-
+	<label>Item Name:</label>
+	<input type="text" id="itemName" />
+	<br />
+	<br> </br>
+	<label>Warehouse Name: </label>
+	<input type="text" id="warehouseName" />
+	<br />
 
 
-			</fieldset>
-			<div>
-			<button onclick="addItemToWareHouse()">Submit.</button>
-				<a href="mainpage.html"><button>Return Back.</button></a>
 
-			</div>
 
-			
-			<script type="text/javascript">
+</fieldset>
 
-                function addItemToWareHouse(){
+<div class="row">
+	<div class="col-md-4"></div>
 
-                    var itemName = document.getElementById('itemName').value;
-                    var warehouseName = document.getElementById('warehouseName').value;
-                    var xhr = new XMLHttpRequest();
-                    var url = "/addItemToWareHouse";
-                    xhr.open("POST", url, true);
-                    xhr.setRequestHeader("Content-Type", "application/json");
-                    xhr.onreadystatechange = function () {
-                        if (xhr.readyState === 4) {
-                            if (xhr.status === 200) {
+	<div class="col-md-2"><button class="btn btn-success" onclick="addItemToWareHouse()">Submit</button></div>
+	<div class="col-md-2">
+		<a href="mainpage.html"><button class="btn btn-success">Return Back</button></a></div>
+</div>
 
-                                alert(xhr.responseText);
-                            }
-                            else {
-                                alert(xhr.responseText);
-                            }
-                        }
-                    };
-                    var data = JSON.stringify({"itemName": itemName, "warehouseName": warehouseName});
-                    xhr.send(data);
+
+</div>
+
+
+<script type="text/javascript">
+
+    function addItemToWareHouse(){
+
+        var itemName = document.getElementById('itemName').value;
+        var warehouseName = document.getElementById('warehouseName').value;
+        var xhr = new XMLHttpRequest();
+        var url = "/addItemToWareHouse";
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+
+                    alert(xhr.responseText);
                 }
+                else {
+                    alert(xhr.responseText);
+                }
+            }
+        };
+        var data = JSON.stringify({"itemName": itemName, "warehouseName": warehouseName});
+        xhr.send(data);
+    }
 
 
-			
 
-			
-			</script>
+
+
+</script>
 </body>
 
 </html>
