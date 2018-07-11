@@ -118,7 +118,7 @@ public class InventoryTrackingController {
     InventoryWareHouseRepository inventoryWareHouseRepository;
     ResponseWrapper responseWrapper = new ResponseWrapper();
 
-    @RequestMapping(value = "/addInventoryItem", method= RequestMethod.POST)
+    @RequestMapping(value = "/api/addInventoryItem", method= RequestMethod.POST)
     public Object addInventoryItem(@RequestBody AddItemWrapper JsonBODY, HttpServletResponse response) {
 
         if (JsonBODY.getName() == "" || JsonBODY.getNumber() <1 ||
@@ -170,7 +170,7 @@ public class InventoryTrackingController {
 
 
     //shortcut of the assigning a http request type , ex.get request
-    @GetMapping(value = "/listInventoryItem")
+    @GetMapping(value = "/api/listInventoryItem")
     public Object listInventoryItem() {
 
         return inventoryItemRepository.findAll();
@@ -178,7 +178,7 @@ public class InventoryTrackingController {
 
 
 
-    @RequestMapping(value = "/addNewWarehouse", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/addNewWarehouse", method = RequestMethod.POST)
     public Object addNewWarehouse(@RequestBody AddWareHouseWrapper JsonBODY, HttpServletResponse response) {
 
 
@@ -219,14 +219,14 @@ public class InventoryTrackingController {
 
     }
 
-    @GetMapping(value = "/listWareHouse")
+    @GetMapping(value = "/api/listWareHouse")
     public Object listWareHouse() {
 
         return inventoryWareHouseRepository.findAll();
     }
 
 
-    @RequestMapping(value = "/addItemToWareHouse", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/addItemToWareHouse", method = RequestMethod.POST)
     public String addItemToWareHouse(@RequestBody AddItemToWareHouseWrapper JsonBODY, HttpServletResponse response) {
 
 
@@ -276,7 +276,7 @@ public class InventoryTrackingController {
 
     }
 
-    @RequestMapping(value = "/updateItemStock", method = RequestMethod.PUT)
+    @RequestMapping(value = "/api/updateItemStock", method = RequestMethod.PUT)
     public String updateItemStock(@RequestBody AddItemWrapper JsonBODY, HttpServletResponse response) {
 
 
@@ -322,7 +322,7 @@ public class InventoryTrackingController {
 
     }
 
-    @RequestMapping(value = "/deleteItem", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/api/deleteItem", method = RequestMethod.DELETE)
     public String deleteItem(@RequestBody RemoveItemWrapper JsonBODY, HttpServletResponse response) {
 
         String willDeleteItemName = JsonBODY.getItemName();
@@ -344,7 +344,7 @@ public class InventoryTrackingController {
 
 
     }
-    @RequestMapping(value = "/deleteWarehouse", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/api/deleteWarehouse", method = RequestMethod.DELETE)
     public String deleteWarehouse(@RequestBody RemoveWarehouseWrapper JsonBODY, HttpServletResponse response) {
 
         String wareHouse_Name = JsonBODY.getWarehousename();

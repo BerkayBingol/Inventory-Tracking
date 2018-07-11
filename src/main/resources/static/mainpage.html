@@ -1,52 +1,322 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html class=''>
 <head>
-    <title>Inventory Tracking</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/main.css">
+    <script src='//production-assets.codepen.io/assets/editor/live/console_runner-079c09a0e3b9ff743e39ee2d5637b9216b3545af0de366d4b9aad9dc87e26bfd.js'></script>
+    <script src='//production-assets.codepen.io/assets/editor/live/events_runner-73716630c22bbc8cff4bd0f07b135f00a0bdc5d14629260c3ec49e5606f98fdd.js'></script>
+    <script src='//production-assets.codepen.io/assets/editor/live/css_live_reload_init-2c0dc5167d60a5af3ee189d570b1835129687ea2a61bee3513dee3a50c115a77.js'></script>
+    <meta charset='UTF-8'><meta name="robots" content="noindex"><link rel="shortcut icon" type="image/x-icon" href="//production-assets.codepen.io/assets/favicon/favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico" />
+    <link rel="mask-icon" type="" href="//production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" color="#111" />
+    <link rel="canonical" href="https://codepen.io/du5rte/pen/OPpmqj?q=single%20page&limit=all&order=popularity&depth=everything&show_forks=false" />
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css'>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style class="cp-pen-styles">@import url(https://fonts.googleapis.com/css?family=Roboto+Slab:700,400,300,100|Montserrat:400,700);
+    body {
+        color: #4E5A74;
+        font-family: "Montserrat", sans-serif;
+        font-weight: 400;
+        text-align: center;
+        line-height: 1.5;
+        margin: 0 auto;
+    }
+    @media (max-width: 768px) {
+        body {
+            font-size: 0.9rem;
+        }
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    img {
+        max-width: 100%;
+    }
+
+    h1 {
+        font-size: 7em;
+        text-transform: uppercase;
+        line-height: 1.3;
+        text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0, 0, 0, 0.1), 0 0 5px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.3), 0 3px 5px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.2), 0 20px 20px rgba(0, 0, 0, 0.15);
+    }
+    @media (max-width: 768px) {
+        h1 {
+            font-size: 3.8em;
+            text-shadow: none;
+        }
+    }
+
+    h2 {
+        font-size: 3.3125em;
+        line-height: 1.1;
+        font-weight: 700;
+    }
+
+    h3 {
+        font-size: 1.75em;
+        line-height: 1.2;
+    }
+
+    p, ul {
+        font-family: "Roboto Slab", serif;
+        font-weight: 300;
+    }
+
+    a {
+        color: #e5ba68;
+        text-decoration: none;
+        font-weight: 400;
+    }
+    a:link {
+        color: #e5ba68;
+    }
+    a:visited {
+        color: #af7d1e;
+    }
+    a:hover {
+        color: #ecce94;
+    }
+    a:focus {
+        color: #f4e2bf;
+    }
+
+    .button {
+        color: #4E5A74;
+        display: inline-block;
+        padding: 10px 20px;
+        border: 2px solid;
+        border-radius: 5px;
+        margin: 30px auto;
+        background-color: white;
+    }
+    .button2 {
+        color: #e7e7e7;
+        display: inline-block;
+        padding: 10px 20px;
+        border: 2px solid;
+        border-radius: 5px;
+        margin: 30px auto;
+        background-color: white;
+    }
+
+    .button:link {
+        color: #4E5A74;
+    }
+    .button:visited {
+        color: #1b1f28;
+    }
+    .button:hover {
+        color: #637292;
+    }
+    .button:focus {
+        color: #7f8ca9;
+    }
+
+    .container {
+        max-width: 940px;
+        margin: 10px auto 80px;
+        padding: 0 3%;
+    }
+
+    .main-header {
+        color: #fff;
+        padding: 20% 3%;
+        background-image: -webkit-linear-gradient(rgba(19, 9, 51, 0.7), transparent 90%), -webkit-linear-gradient(-270deg, #fff, transparent 90%), url("http://i2.chroniclelive.co.uk/incoming/article5694826.ece/alternates/s1227b/Gateshead-Quayside-by-Ian-Hunter.jpg");
+        background-image: linear-gradient(rgba(19, 9, 51, 0.7), transparent 90%), linear-gradient(0deg, #fff, transparent 90%), url("http://i2.chroniclelive.co.uk/incoming/article5694826.ece/alternates/s1227b/Gateshead-Quayside-by-Ian-Hunter.jpg");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+    @media (min-width: 1024px) {
+        .main-header {
+            max-height: 850px;
+            padding-top: 204.8px;
+            padding-bottom: 204.8px;
+        }
+    }
+    @media (max-width: 768px) {
+        .main-header {
+            padding: 40% 3%;
+        }
+    }
+    .main-header .top {
+        position: absolute;
+        display: block;
+        width: 100%;
+        top: 80px;
+    }
+    .main-header .top i {
+        display: block;
+        font-size: 3em;
+    }
+    .main-header .north {
+        display: block;
+        font-size: 0.33em;
+    }
+
+    .primary {
+        margin-bottom: 80px;
+    }
+    .primary .intro {
+        font-size: 1.5em;
+        font-weight: 100;
+        padding-bottom: 30px;
+    }
+    @media (max-width: 768px) {
+        .primary .intro {
+            font-size: 1.2em;
+        }
+    }
+
+    .howay {
+        padding: 20%;
+        margin: 80px auto 20px;
+        border-radius: 8px;
+        background-image: -webkit-linear-gradient(-45deg, rgba(19, 9, 51, 0.9), rgba(19, 9, 51, 0.9)), url("http://i1.thejournal.co.uk/incoming/article4341038.ece/alternates/s615/aerial-view-of-newcastle-and-gateshead-981645981.jpg");
+        background-image: linear-gradient(-45deg, rgba(19, 9, 51, 0.9), rgba(19, 9, 51, 0.9)), url("http://i1.thejournal.co.uk/incoming/article4341038.ece/alternates/s615/aerial-view-of-newcastle-and-gateshead-981645981.jpg");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        box-shadow: inset 0 0 50px 10px rgba(0, 0, 0, 0.8);
+    }
+    .howay h2 {
+        color: #fff;
+    }
+
+    .secondary ul, .secondary p {
+        text-align: left;
+    }
+    .secondary img {
+        width: 100%;
+        border-radius: 8px;
+    }
+    .secondary .turism {
+        width: 46.5%;
+        float: left;
+    }
+    @media (max-width: 768px) {
+        .secondary .turism {
+            float: none;
+            width: 100%;
+        }
+    }
+    .secondary .culture {
+        width: 46.5%;
+        float: right;
+    }
+    @media (max-width: 768px) {
+        .secondary .culture {
+            float: none;
+            width: 100%;
+        }
+    }
+    .secondary ul span {
+        color: #9ea8bd;
+        font-weight: 200;
+        padding-left: 1em;
+    }
+
+    .footer {
+        padding: 20px 0 50px;
+        border-bottom: 15px solid #130933;
+    }
+
+    .border {
+        display: block;
+        width: 20%;
+        margin: 0 auto 25px;
+        border-bottom: 2px solid;
+    }
+
+    .less-marging {
+        margin-top: -60px;
+    }
+
+    .group:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+    </style>
 </head>
+
+
+
+
 <body>
-<h2>
-    <marquee bgcolor=orange behavior=alternate> Inventory Tracking System v1.0 </marquee>
-</h2>
-<div class="container">
-    <h2>Admin Panel </h2>
-    <p>We are growing !</p>
-    <div class="btn-group btn-group-justified">
-        <a href="/addItem.html" class="btn btn-success">Add Item</a>
-    </div>
-    <div class="btn-group btn-group-justified">
-        <a href="/addNewWarehouse.html" class="btn btn-success">Add New Warehouse</a>
 
-    </div>
-    <div class="btn-group btn-group-justified">
-    <a href="/addItemToWareHouse.html" class="btn btn-success">Add Item to Warehouse</a>
-</div>
-    <div class="btn-group btn-group-justified">
-    <a href="/listItems.html" class="btn btn-warning">Items</a>
-</div>
-    <div class="btn-group btn-group-justified">
-        <a href="/listWareHouses.html" class="btn btn-warning">Warehouses</a>
-    </div>
-    <div class="btn-group btn-group-justified">
-        <a href="/updateItemStock.html" class="btn btn-info">Update Stock Status</a>
-    </div>
-    <div class="btn-group btn-group-justified">
-        <a href="/deleteItem.html" class="btn btn-info">Delete Item </a>
 
+<header id="top" class="main-header">
+    <div class="top">
+        <i class="fa fa-map-marker"></i>
+        <p class="title">A simple Inventory Tracking System v.1.1</p>
     </div>
-    <div class="btn-group btn-group-justified">
-        <a href="/deleteWarehouse.html" class="btn btn-info">Delete Warehouse </a>
+    <h1>Inventory Tracking System<div class="north">Around the World</div></h1>
+</header>
+<!-- .primary -->
 
+<div class="border less-marging"></div>
+
+<!-- .primary -->
+<div class="primary container">
+
+    <p class="intro">
+        Inventory tracking system is a basic tracking system that provides tracking the items and warehouses.
+    </p>
+    <a class="button" href="#howay">Find out more</a>
+
+    <div class="bg">
+        <h2>Admin Panel</h2>
+        <p>
+            It is easy to adding a  new item, adding a new warehouse and etc.
+        </p>
+
+        <div class="btn-group btn-group-justified">
+
+            <div>
+                <a href = "/addItem.html" class="button button2">Add a new Item</a>
+
+                <a href = "/addNewWarehouse.html" class="button button2">Add a new Warehouse!</a>
+
+
+                <a href = "/addItemToWareHouse.html" class="button button2">Add item to Warehouse!</a>
+
+                <a href = "/listItems.html" class="button button2">See your Items!</a>
+
+            </div>
+
+
+            <a href = "/updateItemStock.html" class="button button2">Update Stock Status!</a>
+
+
+            <a href = "/listWareHouses.html" class="button button2">See your Warehouses!</a>
+            <a href = "/deleteItem.html" class="button button2">Delete the Item!</a>
+
+
+            <a href = "/deleteWarehouse.html" class="button button2">Delete Warehouse!</a>
+
+
+
+
+        </div>
     </div>
+    <!-- End .primary -->
 
-</div>
+    <!-- .secondary  -->
+
+    <!-- End .secondary  -->
+
+    <div class="border"></div>
+
+    <!-- .main-footer  -->
+    <footer class="main-footer">
+        <p>All rights reserved to the city of <a href="https://en.wikipedia.org/wiki/Gateshead">Inventory Tracking System</a>.</p>
+        <a href="#top">Back to top »</a>
+    </footer>
+    <!-- End .main-footer  -->
 
 </body>
-</html>
 
+</body></html>

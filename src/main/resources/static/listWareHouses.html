@@ -2,45 +2,94 @@
 <html>
 <head>
 
-    <link rel="stylesheet" href="css/main.css">
 
+    <link rel="stylesheet" href="css/main.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
 </head>
 <body onload="listWareHouses()">
-<h1>
-    <marquee bgcolor=orange behavior=alternate> Inventory Tracking System v1.0 </marquee>
-</h1>
 
-<fieldset>
-    <legend>List the WareHouses</legend>
+<div class="image-container set-full-height" style="background-image: url('http://demos.creative-tim.com/material-bootstrap-wizard/assets/img/wizard-book.jpg')">
+    <!--   Creative Tim Branding   -->
+    <a href="http://www.soundcloud.com/berkaybb" target="_blank">
+        <div class="logo-container">
+            <div class="logo">
+                <img src="http://demos.creative-tim.com/material-bootstrap-wizard/assets/img/new_logo.png">
+            </div>
+            <div class="brand">
+                Berkay BINGOL
+            </div>
+        </div>
+    </a>
 
-    <table>
-        <thead>
-        <tr id="e_header">
-            <th>Warehouse ID</th>
-            <th>Warehouse Name</th>
-            <th>WareHouse Location</th>
-            <th>Item Name</th>
-            <th>Item Number</th>
-        </tr>
 
-        </thead>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+                <!-- Wizard container -->
+                <div class="wizard-container">
+                    <div class="card wizard-card" data-color="red" id="wizard">
+                        <!--        You can switch " data-color="blue" "  with one of the next bright colors: "green", "orange", "red", "purple"             -->
 
-        <tbody id="e_table">
+                        <div class="wizard-header">
+                            <h3 class="wizard-title">
+                                ITEMS
+                            </h3>
+                        </div>
+                        <div class="wizard-navigation">
+                            <legend>Item List</legend>
 
-        </tbody>
+                            <ul>
 
-    </table>
+                                <fieldset>
 
-</fieldset>
+                                    <table>
+                                        <thead>
+                                        <tr id="e_header">
+                                            <th>Warehouse ID</th>
+                                            <th>Warehouse Name</th>
+                                            <th>WareHouse Location</th>
+                                            <th>Item Name</th>
+                                            <th>Item Number</th>
+                                        </tr>
 
-<div>
-        <a href="mainpage.html"><button class="btn btn-success">Return Back</button></a></div>
 
-</div>
+                                        </thead>
 
-</div>
+                                        <tbody id="e_table">
+
+                                        </tbody>
+
+                                    </table>
+
+                                </fieldset>
+
+                            </ul>
+                        </div>
+
+
+                        <div class="wizard-footer">
+
+
+                        </div>
+                        <div class="clearfix"></div>
+
+                        <div class="pull-right">
+                            <a href="mainpage.html">
+                                <input type='button' class='btn btn-previous btn-fill btn-danger btn-wd' name='Return Back' value='Return Back' />
+                            </a>
+                        </div>
+
+                        <div class="pull-left">
+                            <a href="mainpage.html">
+                                <input type='button' class='btn btn-submit btn-fill btn-danger btn-wd' name='Return Back' value='Submit' />
+                            </a>
+                        </div>
+
 <script type="text/javascript">
 
 
@@ -49,7 +98,7 @@
 
 
         var xhr = new XMLHttpRequest();
-        var url = "/listWareHouse";
+        var url = "/api/listWareHouse";
         xhr.open("GET", url, true);
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.onreadystatechange = function () {
